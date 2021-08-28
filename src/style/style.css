@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    background: coral;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.navbar__title {
+    color: yellow;
+    font-style: italic;
+    padding: 5px;
+}
+
+.start {
+    border: 2px solid coral;
+    width: 500px;
+    margin: 70px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start__title {
+    padding: 5px;
+}
+
+.link {
+    text-decoration: none;
+    background: coral;
+    color: yellow;
+    padding: 5px;
+
+}
+
+.text {
+    padding: 15px;
+}
+
+.Trello {
+    margin-top: 100px;
+    display: flex;
+
+    justify-content: space-between;
+    text-align: center;
+
+    /*flex-wrap: wrap;*/
+}
+
+.board {
+    margin-top: 10px;
+    padding: 25px;
+    border: 1px solid coral;
+}
+
+.board:not(:last-child) {
+    margin-right: 25px;
+}
+
+.board__item {
+    padding: 10px;
+    border: 1px solid brown ;
+    margin-top: 10px;
+    border-radius: 25px;
+}
+
+.App-Trello {
+    margin: 50px auto;
+    width: 250px;
+
+}
+
+
