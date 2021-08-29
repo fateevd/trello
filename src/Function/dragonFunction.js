@@ -12,6 +12,5 @@ export function dragLeaveHandler(e) {
 
 export function dragEndHandler(e) {
     e.target.style.boxShadow = 'none';
-
 }
 

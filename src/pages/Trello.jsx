@@ -1,43 +1,44 @@
 import React, {useState} from 'react';
 import {dragEndHandler, dragLeaveHandler, ondragOverHandler} from "../Function/dragonFunction";
+import {useHistory} from "react-router";
 
 const Trello = () => {
+
     const [boards, setBoards] = useState([
         {
             id: 1,
             title: 'Что я хочу сделать',
             items: [
-                {id: 1, itle: "Пойти на работу"},
-                {id: 2, itle: "Пойти на работу"},
-                {id: 3, itle: "1"},
-                ]
+                {id: 1, title: "Пойти на работу"},
+                {id: 2, title: "Пойти на работу"},
+                {id: 3, title: "Пойти на работу"},
+                {id: 4, title: "Пойти на работу"},
+                {id: 5, title: "Пойти на работу"},
+                {id: 6, title: "Пойти на работу"},
+                {id: 7, title: "Пойти на работу"},
+            ]
         },
         {
             id: 2,
             title: 'Что я вроде начал делать',
-            items: [
-                {id: 1, itle: "Пойти на работу"},
-                {id: 2, itle: "Пойти на работу"},
-                {id: 3, itle: "1"},
-            ]
+            items: []
         },
         {
             id: 3,
             title: 'Что я делаю сейчас ',
-            items: [
-                {id: 1, itle: "Пойти на работу"},
-                {id: 2, itle: "Пойти на работу"},
-                {id: 3, itle: "1"},
-            ]
+            items: []
         },
         {
             id: 4,
             title: 'Сделал)',
-            items: [ ]
+            items: []
         },
     ]);
     const [currentBoard, setCurrentBoard] = useState(null);
     const [currentItem, setCurrentItem] = useState(null);
+
+
+    const rout = useHistory();
 
     function dragStartHandler(e, board, items) {
         setCurrentBoard(board);
@@ -66,7 +67,6 @@ const Trello = () => {
             return b;
         }));
 
-
     }
 
     function dropBoardHandler(e, board) {
@@ -77,27 +77,25 @@ const Trello = () => {
 
     }
 
-    const createItem = newItem => {
-        setBoards(boards[0].items.push(newItem));
-    };
     return (
         <div className="Trello">
-                {boards.map((board, index) =>
-                    <div className='board' key={index}
-                         onDragOver={(e) => ondragOverHandler(e)}
-                         onDrop={(e) => dropBoardHandler(e, board)}>
-                        <h3 className="board__title">{board.title}</h3>
-                        {board.items.map((items, id) =>
-                            <div className='board__item' key={id} draggable={"true"}
-                                 onDragOver={(e) => ondragOverHandler(e)}
-                                 onDragLeave={e => dragLeaveHandler(e)}
-                                 onDragStart={(e) => dragStartHandler(e, board, items)}
-                                 onDragEnd={(e) => dragEndHandler(e)}
-                                 onDrop={(e) => dropHandler(e, board, items)}
-                            >{items.itle}</div>
-                        )}
-                    </div>
-                )}
+            {boards.map((board, index) =>
+                <div className='board' key={index}
+                     onDragOver={(e) => ondragOverHandler(e)}
+                     onDrop={(e) => dropBoardHandler(e, board)}>
+                    <h3 className="board__title">{board.title}</h3>
+                    {board.items.map((items, id) =>
+                        <div className='board__item' key={id} draggable={"true"}
+                             onClick={() => rout.push(`/Trello/${items.id}`)}
+                             onDragOver={(e) => ondragOverHandler(e)}
+                             onDragLeave={e => dragLeaveHandler(e)}
+                             onDragStart={(e) => dragStartHandler(e, board, items)}
+                             onDragEnd={(e) => dragEndHandler(e)}
+                             onDrop={(e) => dropHandler(e, board, items)}
+                        >{items.title}</div>
+                    )}
+                </div>
+            )}
         </div>
     );
 };
