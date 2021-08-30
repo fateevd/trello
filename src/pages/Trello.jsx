@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {dragEndHandler, dragLeaveHandler, ondragOverHandler} from "../Function/dragonFunction";
 import {useHistory} from "react-router";
 
 const Trello = () => {
-
-    const [boards, setBoards] = useState([
+    const boardsMas = [
         {
             id: 1,
             title: 'Что я хочу сделать',
@@ -33,10 +32,15 @@ const Trello = () => {
             title: 'Сделал)',
             items: []
         },
-    ]);
+    ];
+    const [boards, setBoards] = useState(boardsMas);
     const [currentBoard, setCurrentBoard] = useState(null);
     const [currentItem, setCurrentItem] = useState(null);
 
+    useEffect(() => {
+        const setBoardMas = localStorage.getItem('boards');
+        setBoards(JSON.parse(setBoardMas))
+    }, [])
 
     const rout = useHistory();
 
@@ -44,7 +48,6 @@ const Trello = () => {
         setCurrentBoard(board);
         setCurrentItem(items);
     }
-
 
     function dropHandler(e, board, items) {
         e.preventDefault();
@@ -66,7 +69,7 @@ const Trello = () => {
             }
             return b;
         }));
-
+        localStorage.setItem("boards", JSON.stringify((boards)));
     }
 
     function dropBoardHandler(e, board) {

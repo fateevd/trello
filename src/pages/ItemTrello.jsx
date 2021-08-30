@@ -4,7 +4,7 @@ import "../style/style.css";
 
 
 const ItemTrello = () => {
-    const boards = ([
+    const boardsMas = [
         {
             id: 1,
             title: 'Что я хочу сделать',
@@ -33,17 +33,15 @@ const ItemTrello = () => {
             title: 'Сделал)',
             items: []
         },
-    ]);
+    ];
 
-
-
-
+    console.log(...boardsMas[0].items )
 
     const params = useParams();
     return (
         <div className="Item-item">
             <h4>Задача которую вы открыли  </h4>
-            <div className="board__item">{boards[0].items[params.id - 1].title}</div>
+            <div className="board__item">{boardsMas[0].items[params.id - 1].title}</div>
         </div>
     );
 };
