@@ -3,19 +3,11 @@ import {dragEndHandler, dragLeaveHandler, ondragOverHandler} from "../Function/d
 import {useHistory} from "react-router";
 
 const Trello = () => {
-    const boardsMas = [
+    const [boards, setBoards] = useState([
         {
             id: 1,
             title: 'Что я хочу сделать',
-            items: [
-                {id: 1, title: "Пойти на работу"},
-                {id: 2, title: "Пойти на работу"},
-                {id: 3, title: "Пойти на работу"},
-                {id: 4, title: "Пойти на работу"},
-                {id: 5, title: "Пойти на работу"},
-                {id: 6, title: "Пойти на работу"},
-                {id: 7, title: "Пойти на работу"},
-            ]
+            items: []
         },
         {
             id: 2,
@@ -32,14 +24,17 @@ const Trello = () => {
             title: 'Сделал)',
             items: []
         },
-    ];
-    const [boards, setBoards] = useState(boardsMas);
+    ]);
     const [currentBoard, setCurrentBoard] = useState(null);
     const [currentItem, setCurrentItem] = useState(null);
 
     useEffect(() => {
         const setBoardMas = localStorage.getItem('boards');
-        setBoards(JSON.parse(setBoardMas))
+        if (setBoardMas !== null) {
+            setBoards(JSON.parse(setBoardMas))
+        }
+
+
     }, [])
 
     const rout = useHistory();
@@ -80,8 +75,22 @@ const Trello = () => {
 
     }
 
+    const addNewItem = item => {
+        if (item !== '') {
+            const newItem = {
+                id: Date.now(),
+                title: item.toString()
+            }
+            setCurrentBoard([...boards, boards[0].items.push(newItem)]);
+            localStorage.setItem("boards", JSON.stringify((boards)));
+        } else {
+            alert("Не-а, у тебя ничего не получится Джон Сноу :)")
+        }
+    }
+
     return (
         <div className="Trello">
+            <button className="button-trello" onClick={() => addNewItem(prompt("Укажите вашу задачу"))}>Добавить задачу</button>
             {boards.map((board, index) =>
                 <div className='board' key={index}
                      onDragOver={(e) => ondragOverHandler(e)}
@@ -89,7 +98,7 @@ const Trello = () => {
                     <h3 className="board__title">{board.title}</h3>
                     {board.items.map((items, id) =>
                         <div className='board__item' key={id} draggable={"true"}
-                             onClick={() => rout.push(`/Trello/${items.id}`)}
+                             onClick={() => rout.push(`/Trello/${items.title}`)}
                              onDragOver={(e) => ondragOverHandler(e)}
                              onDragLeave={e => dragLeaveHandler(e)}
                              onDragStart={(e) => dragStartHandler(e, board, items)}
@@ -99,6 +108,7 @@ const Trello = () => {
                     )}
                 </div>
             )}
+
         </div>
     );
 };

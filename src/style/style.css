@@ -82,4 +82,12 @@
     font-size: 20px;
 }
 
+.button-trello {
+    flex: 0 0 100%;
+    height: 50px;
+    border-radius: 50px;
+    background: coral;
+    color: yellow;
+}
+
 
