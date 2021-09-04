@@ -17,7 +17,7 @@ const ItemTrello = () => {
     return (
         <div className="Item-item">
             <h4>Задача которую вы открыли </h4>
-            <div key={params.id} className='board__item'>{name}</div>
+            <div  className='board__item'>{name}</div>
         </div>
     );
 };
