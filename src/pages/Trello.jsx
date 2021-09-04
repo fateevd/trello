@@ -74,7 +74,6 @@ const Trello = () => {
         renderItem(board);
 
     }
-
     const addNewItem = item => {
         if (item !== '') {
             const newItem = {
@@ -83,14 +82,16 @@ const Trello = () => {
             }
             setCurrentBoard([...boards, boards[0].items.push(newItem)]);
             localStorage.setItem("boards", JSON.stringify((boards)));
+            localStorage.setItem("boardsID", JSON.stringify((boards[0].items)));
         } else {
             alert("Не-а, у тебя ничего не получится Джон Сноу :)")
         }
     }
-
     return (
         <div className="Trello">
-            <button className="button-trello" onClick={() => addNewItem(prompt("Укажите вашу задачу"))}>Добавить задачу</button>
+            <button className="button-trello" onClick={() => addNewItem(prompt("Укажите вашу задачу"))}>Добавить
+                задачу
+            </button>
             {boards.map((board, index) =>
                 <div className='board' key={index}
                      onDragOver={(e) => ondragOverHandler(e)}
@@ -98,7 +99,7 @@ const Trello = () => {
                     <h3 className="board__title">{board.title}</h3>
                     {board.items.map((items, id) =>
                         <div className='board__item' key={id} draggable={"true"}
-                             onClick={() => rout.push(`/Trello/${items.title}`)}
+                             onClick={() => rout.push(`/Trello/${items.id}`)}
                              onDragOver={(e) => ondragOverHandler(e)}
                              onDragLeave={e => dragLeaveHandler(e)}
                              onDragStart={(e) => dragStartHandler(e, board, items)}
@@ -108,7 +109,6 @@ const Trello = () => {
                     )}
                 </div>
             )}
-
         </div>
     );
 };
